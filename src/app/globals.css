@@ -1,0 +1,218 @@
+@import 'tailwindcss';
+
+/* ==========================================================================
+   Eventora design tokens
+   --------------------------------------------------------------------------
+   One blue family carries the whole product. `brand` is the interactive blue,
+   `ink` the near-black navy used for text and deep surfaces, `azure` a single
+   bright accent reserved for highlights that must not be missed. Everything
+   else is a neutral tuned slightly cool so it sits under the blues without
+   turning grey-brown.
+
+   No component is allowed to invent a colour: if it is not a token below, it
+   does not appear in the interface.
+   ========================================================================== */
+
+@theme {
+  /* Interactive blue */
+  --color-brand-50: #eff5ff;
+  --color-brand-100: #dbe8fe;
+  --color-brand-200: #bfd7fe;
+  --color-brand-300: #93bbfd;
+  --color-brand-400: #6096fa;
+  --color-brand-500: #3b74f6;
+  --color-brand-600: #1d55e8;
+  --color-brand-700: #1741d3;
+  --color-brand-800: #1937ab;
+  --color-brand-900: #1a3287;
+  --color-brand-950: #142052;
+
+  /* Deep navy — hero, footer, admin chrome */
+  --color-ink-50: #f3f6fb;
+  --color-ink-100: #e4eaf5;
+  --color-ink-200: #cdd8ec;
+  --color-ink-300: #a6bbdd;
+  --color-ink-400: #7897ca;
+  --color-ink-500: #5678b6;
+  --color-ink-600: #425f9a;
+  --color-ink-700: #374d7d;
+  --color-ink-800: #314268;
+  --color-ink-900: #0f2547;
+  --color-ink-950: #071426;
+
+  /* Cool neutrals */
+  --color-mist-50: #f8fafd;
+  --color-mist-100: #f1f5fa;
+  --color-mist-200: #e5ebf3;
+  --color-mist-300: #d3dce8;
+  --color-mist-400: #a8b6c9;
+  --color-mist-500: #7a8aa0;
+  --color-mist-600: #5b6a7f;
+  --color-mist-700: #45525f;
+  --color-mist-800: #2f3945;
+  --color-mist-900: #1c232c;
+
+  /* Single bright accent */
+  --color-azure-400: #38bdf8;
+  --color-azure-500: #0ea5e9;
+  --color-azure-600: #0284c7;
+
+  /* Semantic */
+  --color-success-50: #ecfdf5;
+  --color-success-500: #10b981;
+  --color-success-700: #047857;
+  --color-warn-50: #fffbeb;
+  --color-warn-500: #f59e0b;
+  --color-warn-700: #b45309;
+  --color-danger-50: #fef2f2;
+  --color-danger-500: #ef4444;
+  --color-danger-600: #dc2626;
+  --color-danger-700: #b91c1c;
+
+  --font-sans:
+    -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', 'Helvetica Neue', Arial,
+    'Noto Sans', sans-serif;
+  --font-display:
+    'Segoe UI', -apple-system, BlinkMacSystemFont, 'Inter', 'Helvetica Neue', Arial, sans-serif;
+
+  --radius-card: 1rem;
+  --radius-panel: 1.25rem;
+
+  /* Blue-tinted elevation — grey shadows look muddy on a blue ground */
+  --shadow-soft: 0 1px 2px rgb(15 37 71 / 0.04), 0 4px 16px rgb(15 37 71 / 0.06);
+  --shadow-lift: 0 2px 4px rgb(15 37 71 / 0.05), 0 14px 34px rgb(15 37 71 / 0.12);
+  --shadow-panel: 0 24px 60px rgb(7 20 38 / 0.18);
+}
+
+/* ==========================================================================
+   Base
+   ========================================================================== */
+
+@layer base {
+  * {
+    border-color: var(--color-mist-200);
+  }
+
+  html {
+    -webkit-text-size-adjust: 100%;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    background: var(--color-mist-50);
+    color: var(--color-ink-950);
+    font-family: var(--font-sans);
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  h1, h2, h3, h4 {
+    font-family: var(--font-display);
+    letter-spacing: -0.021em;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* A single visible focus treatment everywhere, rather than per-component. */
+  :focus-visible {
+    outline: 2px solid var(--color-brand-600);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  ::selection {
+    background: var(--color-brand-200);
+    color: var(--color-ink-950);
+  }
+
+  /* Respect a stated preference for less motion. */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* ==========================================================================
+   Utilities
+   ========================================================================== */
+
+@layer utilities {
+  .container-page {
+    width: 100%;
+    max-width: 80rem;
+    margin-inline: auto;
+    padding-inline: 1rem;
+  }
+
+  @media (min-width: 640px) {
+    .container-page { padding-inline: 1.5rem; }
+  }
+
+  @media (min-width: 1024px) {
+    .container-page { padding-inline: 2rem; }
+  }
+
+  /* Deep navy field used behind the hero and the footer. */
+  .surface-deep {
+    background:
+      radial-gradient(120% 100% at 15% 0%, rgb(29 85 232 / 0.42) 0%, transparent 55%),
+      radial-gradient(90% 90% at 90% 10%, rgb(56 189 248 / 0.22) 0%, transparent 60%),
+      linear-gradient(180deg, var(--color-ink-950) 0%, #0a1d38 55%, var(--color-ink-900) 100%);
+  }
+
+  .surface-panel {
+    background: #fff;
+    border: 1px solid var(--color-mist-200);
+    border-radius: var(--radius-panel);
+    box-shadow: var(--shadow-soft);
+  }
+
+  .text-gradient-brand {
+    background: linear-gradient(120deg, #fff 0%, var(--color-brand-200) 45%, var(--color-azure-400) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+
+  /* Hides scrollbars on the horizontal chip rails without losing scrolling. */
+  .no-scrollbar {
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+  }
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .skeleton {
+    background: linear-gradient(
+      90deg,
+      var(--color-mist-200) 25%,
+      var(--color-mist-100) 50%,
+      var(--color-mist-200) 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.4s ease-in-out infinite;
+  }
+
+  @keyframes shimmer {
+    from { background-position: 200% 0; }
+    to { background-position: -200% 0; }
+  }
+
+  .animate-rise {
+    animation: rise 0.45s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  @keyframes rise {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: none; }
+  }
+}
