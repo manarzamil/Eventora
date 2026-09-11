@@ -1,0 +1,31 @@
+# Local PostgreSQL for development and for the test suite.
+#
+#   docker compose up -d
+#
+# Brings up one server with both databases created, matching the connection
+# strings in .env.example. The application itself runs on the host with
+# `npm run dev` — containerising it would add a rebuild step to every edit
+# without making the setup any more reproducible.
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: eventora-postgres
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: eventora
+    ports:
+      - '5432:5432'
+    volumes:
+      - eventora-pgdata:/var/lib/postgresql/data
+      - ./scripts/init-databases.sql:/docker-entrypoint-initdb.d/10-init.sql:ro
+    healthcheck:
+      test: ['CMD-SHELL', 'pg_isready -U postgres']
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  eventora-pgdata:
