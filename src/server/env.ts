@@ -23,7 +23,7 @@ export function getEnv(): Env {
   if (cached) return cached;
 
   const parsed = envSchema.safeParse({
-    DATABASE_URL: process.env.DATABASE_URL,
+    DATABASE_URL: (process.env.DATABASE_URL ?? process.env.NETLIFY_DATABASE_URL),
     AUTH_SECRET: process.env.AUTH_SECRET,
     AUTH_SESSION_TTL_SECONDS: process.env.AUTH_SESSION_TTL_SECONDS,
     NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,

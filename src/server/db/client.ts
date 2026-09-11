@@ -14,7 +14,7 @@ declare global {
 }
 
 function createClient() {
-  const connectionString = process.env.DATABASE_URL;
+  const connectionString = (process.env.DATABASE_URL ?? process.env.NETLIFY_DATABASE_URL);
   if (!connectionString) {
     throw new Error('DATABASE_URL is not set. Copy .env.example to .env.');
   }
