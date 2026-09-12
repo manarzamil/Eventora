@@ -8,7 +8,7 @@ A full-stack events and activities discovery and booking platform.
 Country → city → filtered results → dated booking, with an administrative
 dashboard behind it.
 
-**▶ [Live demo](https://super-kelpie-38b912.netlify.app/)** — deployed on Netlify with a
+**▶ [Live demo](https://eventora12.netlify.app/)** — deployed on Netlify with a
 PostgreSQL database and the standard demo dataset. Sign in with the
 [demonstration accounts](#demonstration-accounts) to try booking and the admin
 dashboard.
